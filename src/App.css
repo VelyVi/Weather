@@ -18,7 +18,7 @@
 	backdrop-filter: brightness(1) blur(5px);
 	border-radius: 1.5rem;
 	box-shadow: 0 0 10px 0 #00000065;
-	transition: box-shadow 0.4s;
+	transition: box-shadow 0.6s;
 }
 
 .card:hover {
