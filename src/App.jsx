@@ -114,7 +114,7 @@ function App() {
 				{temp} {toggle ? '°F' : '°C'}
 			</h2>
 			<button onClick={() => setToggle(!toggle)} className="card__button">
-				Change to {!toggle ? '°C' : '°F'}
+				Change to {!toggle ? '°F' : '°C'}
 			</button>
 		</div>
 	);
