@@ -37,7 +37,7 @@ const icons = {
 	snow: snowSvg,
 	atmosphere: atmosphereSvg,
 	clear: clearSvg,
-	cloud: cloudSvg,
+	clouds: cloudSvg,
 };
 
 function App() {
