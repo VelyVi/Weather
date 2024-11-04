@@ -103,15 +103,11 @@ function App() {
 	return (
 		<div>
 			{loading ? (
-				<img src="./../public/load-wop.gif" alt="loadwooper" />
+				<img src="/load-wop.gif" alt="loadwooper" />
 			) : error ? (
 				<h2 className="errpsy">
 					{' '}
-					<img
-						className="imgpsy"
-						src="./../public/err-psy.gif"
-						alt="errpsy"
-					/>{' '}
+					<img className="imgpsy" src="/err-psy.gif" alt="errpsy" />{' '}
 					<p className="texterr">{error}</p>
 				</h2>
 			) : (
