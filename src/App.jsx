@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './App.css';
-
+import Card from './components/Card.jsx';
 import {
 	thunderstormSvg,
 	drizzleSvg,
@@ -44,6 +44,9 @@ function App() {
 	const [coords, setCoords] = useState(initialState);
 	const [weather, setWeather] = useState({});
 	const [toggle, setToggle] = useState(false);
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState(null);
+	const [errorApi, setErrorApi] = useState(null);
 
 	useEffect(() => {
 		navigator.geolocation.getCurrentPosition(
@@ -52,13 +55,14 @@ function App() {
 				setCoords({ latitude, longitude });
 			},
 			(error) => {
-				console.log('No se aceptó la ubicacion');
+				setError("User denied ubication, we can't find the weather");
 			},
 		);
 	}, []);
 
 	useEffect(() => {
 		if (coords) {
+			setLoading(true);
 			axios
 				.get(
 					`${url}?lat=${coords.latitude}&lon=${coords.longitude}&&appid=${key}`,
@@ -84,38 +88,35 @@ function App() {
 						pressure: res.data?.main?.pressure,
 						temperature: parseInt(res.data?.main?.temp - 273.15),
 					});
+
+					setError(null);
 				})
 				.catch((err) => {
-					console.log(err);
+					setErrorApi(err.response?.data?.message || err.message);
+				})
+				.finally(() => {
+					setLoading(false);
 				});
 		}
 	}, [coords]);
 
-	const temp = toggle
-		? parseInt((weather.temperature * 9) / 5 + 32)
-		: weather.temperature;
-
 	return (
-		<div className="card">
-			<h1 className="card__title">Weather App</h1>
-			<h2 className="card__subtitle">
-				{weather.city}, {weather.country}
-			</h2>
-			<div className="card__body">
-				<img src={weather.icon} alt={weather.main} width={150} />
-				<div className="card__info">
-					<h3 className="card__main">{weather.main}</h3>
-					<p className="card__wind-speed">Wind speed {weather.wind}m/s</p>
-					<p className="card__clouds">Clouds {weather.clouds}%</p>
-					<p className="card__pressure">Pressure {weather.pressure}hPa</p>
-				</div>
-			</div>
-			<h2 className="card__temperature">
-				{temp} {toggle ? '°F' : '°C'}
-			</h2>
-			<button onClick={() => setToggle(!toggle)} className="card__button">
-				Change to {!toggle ? '°F' : '°C'}
-			</button>
+		<div>
+			{loading ? (
+				<img src="./../public/load-wop.gif" alt="loadwooper" />
+			) : error ? (
+				<h2 className="errpsy">
+					{' '}
+					<img
+						className="imgpsy"
+						src="./../public/err-psy.gif"
+						alt="errpsy"
+					/>{' '}
+					<p className="texterr">{error}</p>
+				</h2>
+			) : (
+				<Card weather={weather} toggle={toggle} setToggle={setToggle} />
+			)}
 		</div>
 	);
 }

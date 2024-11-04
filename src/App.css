@@ -30,6 +30,11 @@
 	text-align: center;
 }
 
+.errpsy {
+	display: flex;
+	align-items: center;
+}
+
 .card__body {
 	display: flex;
 	align-items: center;
