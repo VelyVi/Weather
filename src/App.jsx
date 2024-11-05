@@ -12,6 +12,16 @@ import {
 	cloudSvg,
 } from './assets/images/index.js';
 
+import {
+	thunderstorm,
+	drizzle,
+	rain,
+	snow,
+	atmosphere,
+	clear,
+	cloud,
+} from './assets/images/img-bgs/bgsindex.js';
+
 const key = '540839817400dda28b77d2ae53252a75';
 const url = `https://api.openweathermap.org/data/2.5/weather`;
 
@@ -40,6 +50,16 @@ const icons = {
 	clouds: cloudSvg,
 };
 
+const backgrounds = {
+	thunderstorm: thunderstorm,
+	drizzle: drizzle,
+	rain: rain,
+	snow: snow,
+	atmosphere: atmosphere,
+	clear: clear,
+	clouds: cloud,
+};
+
 function App() {
 	const [coords, setCoords] = useState(initialState);
 	const [weather, setWeather] = useState({});
@@ -47,6 +67,7 @@ function App() {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [errorApi, setErrorApi] = useState(null);
+	const [bgs, setBgs] = useState('');
 
 	useEffect(() => {
 		navigator.geolocation.getCurrentPosition(
@@ -73,7 +94,8 @@ function App() {
 					const iconName = keys.find((key) =>
 						conditionCodes[key].includes(res.data?.weather[0]?.id),
 					);
-
+					setBgs(iconName);
+					console.log(iconName);
 					setWeather({
 						city: res.data?.name,
 						country: res.data?.sys?.country,
@@ -101,7 +123,10 @@ function App() {
 	}, [coords]);
 
 	return (
-		<div>
+		<div
+			className="container"
+			style={{ backgroundImage: `url(${backgrounds[bgs]}` }}
+		>
 			{loading ? (
 				<img src="/load-wop.gif" alt="loadwooper" />
 			) : error ? (
