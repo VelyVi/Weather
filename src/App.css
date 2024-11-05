@@ -19,7 +19,7 @@
 
 .card {
 	max-width: 350px;
-	height: 400px;
+	width: 100%;
 	padding: 2rem 1.5rem;
 	background-color: #ffffff80;
 	-webkit-backdrop-filter: brightness(1) blur(5px);
